@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 export default function RegisterPage() {
   const searchParams = useSearchParams();
   const [userType, setUserType] = useState<"customer" | "provider">(
-    searchParams.get("type") === "provider" ? "provider" : "customer"
+    searchParams.get("type") === "provider" ? "provider" : "customer",
   );
 
   return (
@@ -26,7 +26,7 @@ export default function RegisterPage() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">
@@ -44,7 +44,7 @@ export default function RegisterPage() {
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2">Create Your Account</h1>
-            <p className="text-muted-foreground">Join UniHub and get started</p>
+            <p className="text-muted-foreground">Join Haven and get started</p>
           </div>
 
           <Card>

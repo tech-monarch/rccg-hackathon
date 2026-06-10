@@ -14,7 +14,7 @@ interface FloatingWhatsAppProps {
 
 export function FloatingWhatsApp({
   supportNumber = "+234 901 733 5663",
-  message = "Hi! I need help with UniHub. Can you assist me?",
+  message = "Hi! I need help with Haven. Can you assist me?",
   position = "bottom-right",
 }: FloatingWhatsAppProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +47,7 @@ export function FloatingWhatsApp({
                   <MessageCircle className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">UniHub Support</p>
+                  <p className="font-semibold text-sm">Haven Support</p>
                   <p className="text-xs text-green-600">● Online</p>
                 </div>
               </div>

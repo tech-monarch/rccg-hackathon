@@ -43,7 +43,7 @@ function WhatsAppBotButton({
       "Hello Haven Bot, I need help finding a service professional";
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
-      "_blank"
+      "_blank",
     );
   };
 
@@ -243,7 +243,7 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-12 md:py-20 bg-gradient-to-br from-blue-50 to-blue-100">
+      <section className="relative py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Left Column - Text Content */}
@@ -267,7 +267,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-lg text-muted-foreground mb-8">
-                UniHub brings together everything students need — from finding
+                Haven brings together everything students need — from finding
                 quick jobs and trusted housing to recovering lost items and
                 staying updated on campus events.
               </p>
@@ -337,7 +337,7 @@ export default function HomePage() {
               Needs.
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              UniHub is a centralized platform where students can access all
+              Haven is a centralized platform where students can access all
               essential services in one place. From earning extra income to
               finding secure housing, we've got you covered.
             </p>
@@ -476,9 +476,9 @@ export default function HomePage() {
                           window.open(
                             `https://wa.me/${provider.phone.replace(
                               /[^0-9]/g,
-                              ""
+                              "",
                             )}?text=${encodeURIComponent(message)}`,
-                            "_blank"
+                            "_blank",
                           );
                         }}
                         className="flex-1 bg-blue-600 hover:bg-blue-700"
@@ -583,9 +583,9 @@ export default function HomePage() {
                           window.open(
                             `https://wa.me/${house.phone.replace(
                               /[^0-9]/g,
-                              ""
+                              "",
                             )}?text=${encodeURIComponent(message)}`,
-                            "_blank"
+                            "_blank",
                           );
                         }}
                         className="flex-1 bg-blue-600 hover:bg-blue-700 w-full"
@@ -622,7 +622,7 @@ export default function HomePage() {
             <Badge variant="secondary" className="mb-4 animate-bounce">
               Simple Process
             </Badge>
-            <h2 className="text-3xl font-bold mb-4">How does UniHub Work??</h2>
+            <h2 className="text-3xl font-bold mb-4">How does Haven Work??</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Get your tasks done in just a few easy steps
             </p>
@@ -778,7 +778,7 @@ export default function HomePage() {
             <Badge variant="secondary" className="mb-4 animate-bounce">
               Peace of Mind
             </Badge>
-            <h2 className="text-3xl font-bold mb-4">Why Choose UniHub</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose Haven</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               We go the extra mile to ensure you get the best service experience
             </p>
@@ -867,9 +867,9 @@ export default function HomePage() {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">UH</span>
+                  <span className="text-white font-bold text-sm">HA</span>
                 </div>
-                <span className="text-xl font-bold text-blue-600">UniHub</span>
+                <span className="text-xl font-bold text-blue-600">HAVEN</span>
               </div>
               <p className="text-muted-foreground text-sm">
                 Connecting Students with trusted service providers around them.
@@ -914,7 +914,7 @@ export default function HomePage() {
                     href="/auth/register?type=provider"
                     className="hover:text-foreground transition-colors"
                   >
-                    Join UniHub
+                    Join Haven
                   </Link>
                 </li>
                 <li>
@@ -976,7 +976,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2025 UniHub. All rights reserved.</p>
+            <p>&copy; 2025 Haven. All rights reserved.</p>
           </div>
         </div>
       </footer>

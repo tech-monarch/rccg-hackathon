@@ -127,8 +127,7 @@ const sampleproviders = [
     email: "hello@mrcleanebusy.com",
     image:
       "https://www.nairaland.com/attachments/16999586_65cbc4a992571d113f3191438519ee0b_jpegc39fd5f4173ad02124a0d436cdf441e4",
-    description:
-      "I can help you with your home services😏",
+    description: "I can help you with your home services😏",
     price: 3000,
     estimatedTime: "2-3 hours",
     pointsEarned: 60,
@@ -145,8 +144,7 @@ const sampleproviders = [
     email: "hello@mrfarmboy.com",
     image:
       "https://tse3.mm.bing.net/th/id/OIP.SYK5-rGj7lpAa0-HrJqxhQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
-    description:
-      "I sha dey cut grass",
+    description: "I sha dey cut grass",
     price: 4000,
     estimatedTime: "4-6 hours",
     pointsEarned: 80,
@@ -212,7 +210,7 @@ export default function RequestService() {
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -282,7 +280,7 @@ export default function RequestService() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link href="/customer/dashboard">
@@ -629,7 +627,7 @@ export default function RequestService() {
                         <span className="font-medium">
                           {formData.category
                             ? serviceCategories.find(
-                                (cat) => cat.id === formData.category
+                                (cat) => cat.id === formData.category,
                               )?.name || "Service"
                             : "Service"}
                         </span>
@@ -705,7 +703,7 @@ export default function RequestService() {
                     <span className="font-medium">
                       {formData.category
                         ? serviceCategories.find(
-                            (cat) => cat.id === formData.category
+                            (cat) => cat.id === formData.category,
                           )?.name || "Service"
                         : "Service"}
                     </span>

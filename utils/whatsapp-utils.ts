@@ -79,13 +79,13 @@ export const messageTemplates = {
     `Hi ${providerName}! I'm interested in your ${category} services. Can you provide more information?`,
 
   quote: (providerName: string, category: string) =>
-    `Hi ${providerName}! I found your profile on UniHub and would like to request a quote for ${category} services.`,
+    `Hi ${providerName}! I found your profile on Haven and would like to request a quote for ${category} services.`,
 
   booking: (providerName: string, category: string) =>
     `Hi ${providerName}! I'd like to book your ${category} services. When are you available?`,
 
-  support: () => `Hi! I need help with UniHub. Can you assist me?`,
+  support: () => `Hi! I need help with Haven. Can you assist me?`,
 
   general: (providerName: string) =>
-    `Hi ${providerName}! I found your profile on UniHub and would like to connect.`,
+    `Hi ${providerName}! I found your profile on Haven and would like to connect.`,
 };

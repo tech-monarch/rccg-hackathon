@@ -154,7 +154,7 @@ export default function providerRegisterPage() {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("currentUser", JSON.stringify(userData));
 
-      alert("Registration successful! Welcome to UniHub!");
+      alert("Registration successful! Welcome to Haven!");
       window.location.href = "/provider/dashboard";
     } catch (error) {
       alert("Registration failed. Please try again.");
@@ -173,7 +173,7 @@ export default function providerRegisterPage() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">
@@ -190,7 +190,7 @@ export default function providerRegisterPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Join UniHub as a Helper</h1>
+            <h1 className="text-3xl font-bold mb-2">Join Haven as a Helper</h1>
             <p className="text-muted-foreground">
               Start connecting with customers and grow your Helper today
             </p>

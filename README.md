@@ -1,7 +1,7 @@
 
-# UniHub
+# Haven
 
-**UniHub** is a student-centered platform designed to connect students with local services, resources, and opportunities within the university campus. The platform empowers students to find trusted service providers, hire fellow students for tasks, access hostel and lodge information, recover lost items, and stay updated on campus events—all in one convenient hub.
+**Haven** is a student-centered platform designed to connect students with local services, resources, and opportunities within the university campus. The platform empowers students to find trusted service providers, hire fellow students for tasks, access hostel and lodge information, recover lost items, and stay updated on campus events—all in one convenient hub.
 
 ## Key Features
 
@@ -10,7 +10,7 @@
 * **Lost & Found System:** Quickly report and retrieve lost items on campus.
 * **Campus Accommodation Info:** Compare hostel and lodge prices, locations, and availability.
 * **Event & Lecture Notifications:** Stay up-to-date with university events and academic schedules.
-* **UniHub Bot:** WhatsApp-integrated assistant to help navigate services and find solutions quickly.
+* **Haven Bot:** WhatsApp-integrated assistant to help navigate services and find solutions quickly.
 
 ## Tech Stack
 
@@ -24,7 +24,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/tech-monarch/unihub.git
+   git clone https://github.com/tech-monarch/haven.git
    ```
 2. Install dependencies:
 

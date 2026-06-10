@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import {
-  Themeprovider as NextThemesprovider,
-  type ThemeproviderProps,
+  ThemeProvider as NextThemeProvider,
+  type ThemeProviderProps,
 } from "next-themes";
 
-export function Themeprovider({ children, ...props }: ThemeproviderProps) {
-  return <NextThemesprovider {...props}>{children}</NextThemesprovider>;
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  return <NextThemeProvider {...props}>{children}</NextThemeProvider>;
 }

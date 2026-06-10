@@ -15,7 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
-  Tooltipprovider,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -41,13 +41,13 @@ const SidebarContext = React.createContext<SidebarContext | null>(null);
 function useSidebar() {
   const context = React.useContext(SidebarContext);
   if (!context) {
-    throw new Error("useSidebar must be used within a Sidebarprovider.");
+    throw new Error("useSidebar must be used within a SidebarProvider.");
   }
 
   return context;
 }
 
-const Sidebarprovider = React.forwardRef<
+const SidebarProvider = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
     defaultOpen?: boolean;
@@ -89,7 +89,7 @@ const Sidebarprovider = React.forwardRef<
       [setOpenProp, open]
     );
 
-    //  provider to toggle the sidebar.
+    // Provider to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
       return isMobile
         ? setOpenMobile((open) => !open)
@@ -130,8 +130,8 @@ const Sidebarprovider = React.forwardRef<
     );
 
     return (
-      <SidebarContext.provider value={contextValue}>
-        <Tooltipprovider delayDuration={0}>
+      <SidebarContext.Provider value={contextValue}>
+        <TooltipProvider delayDuration={0}>
           <div
             style={
               {
@@ -149,12 +149,12 @@ const Sidebarprovider = React.forwardRef<
           >
             {children}
           </div>
-        </Tooltipprovider>
-      </SidebarContext.provider>
+        </TooltipProvider>
+      </SidebarContext.Provider>
     );
   }
 );
-Sidebarprovider.displayName = "Sidebarprovider";
+SidebarProvider.displayName = "SidebarProvider";
 
 const Sidebar = React.forwardRef<
   HTMLDivElement,
@@ -755,7 +755,7 @@ export {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  Sidebarprovider,
+  SidebarProvider,
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
