@@ -39,7 +39,7 @@ function WhatsAppBotButton({
   const handleClick = () => {
     const phoneNumber = "2349017335663";
     const message =
-      "Hello UniHub Bot, I need help finding a service professional";
+      "Hello Haven Bot, I need help finding a service professional";
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
       "_blank"
@@ -57,7 +57,7 @@ function WhatsAppBotButton({
       }`}
     >
       <Bot className="w-4 h-4" />
-      UniHub Bot
+      Haven Bot
     </Button>
   );
 }

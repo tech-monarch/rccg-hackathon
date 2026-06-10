@@ -40,7 +40,7 @@ function WhatsAppBotButton({
   const handleClick = () => {
     const phoneNumber = "2349017335663";
     const message =
-      "Hello UniHub Bot, I need help finding a service professional";
+      "Hello Haven Bot, I need help finding a service professional";
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
       "_blank"
@@ -58,7 +58,7 @@ function WhatsAppBotButton({
       }`}
     >
       <Bot className="w-4 h-4" />
-      UniHub Bot
+      Haven Bot
     </Button>
   );
 }
@@ -180,9 +180,9 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-2 group">
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform">
-                <span className="text-white font-bold text-sm">UH</span>
+                <span className="text-white font-bold text-sm">HA</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">HAVEN</span>
             </Link>
 
             <nav className="hidden md:flex items-center space-x-6">
@@ -252,7 +252,7 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <Bot className="w-5 h-5 text-blue-600" />
                   <span className="font-semibold text-blue-600">
-                    Try UniHub Bot
+                    Try Haven Bot
                   </span>
                   <Rocket className="w-4 h-4 text-red-500 fill-yellow-400" />
                 </div>
@@ -481,8 +481,7 @@ export default function HomePage() {
                             "_blank"
                           );
                         }}
-                        className="flex-1b g-blue-600 hover:bg-blue-700
-"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700"
                         size="sm"
                       >
                         Chat Now
@@ -582,15 +581,14 @@ export default function HomePage() {
                         onClick={() => {
                           const message = `Hi! I'm interested in your ${house.category} services. Can you provide more information?`;
                           window.open(
-                            `https://wa.me/${provider.phone.replace(
+                            `https://wa.me/${house.phone.replace(
                               /[^0-9]/g,
                               ""
                             )}?text=${encodeURIComponent(message)}`,
                             "_blank"
                           );
                         }}
-                        className="flex-1b g-blue-600 hover:bg-blue-700 w-full
-"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 w-full"
                         size="sm"
                       >
                         Chat Now

@@ -75,6 +75,9 @@ const sampleproviders = [
     image:
       "https://i.pinimg.com/736x/e3/dd/b0/e3ddb011e1f98a32f6c1c9f5c03ee515.jpg",
     description: "I sha sabi cook, just dm me make i come cook for u",
+    price: 2500,
+    estimatedTime: "1-2 hours",
+    pointsEarned: 50,
   },
   {
     id: 2,
@@ -90,6 +93,9 @@ const sampleproviders = [
       "https://tse2.mm.bing.net/th/id/OIP.QmuHVhXyHhi4O-V2thkdxgAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
     description:
       "I sha dey repair phones, if you wan sell, swap, or even buy and fix i active",
+    price: 5000,
+    estimatedTime: "2-4 hours",
+    pointsEarned: 100,
   },
   {
     id: 3,
@@ -105,6 +111,9 @@ const sampleproviders = [
       "https://counseal.com/app/uploads/2023/11/website-featured-An-Image-depicting-a-laundry-business.jpg",
     description:
       "Professional laundry and dry cleaning services for all occasions",
+    price: 1500,
+    estimatedTime: "3-5 hours",
+    pointsEarned: 30,
   },
   {
     id: 4,
@@ -120,6 +129,9 @@ const sampleproviders = [
       "https://www.nairaland.com/attachments/16999586_65cbc4a992571d113f3191438519ee0b_jpegc39fd5f4173ad02124a0d436cdf441e4",
     description:
       "I can help you with your home services😏",
+    price: 3000,
+    estimatedTime: "2-3 hours",
+    pointsEarned: 60,
   },
   {
     id: 5,
@@ -135,6 +147,9 @@ const sampleproviders = [
       "https://tse3.mm.bing.net/th/id/OIP.SYK5-rGj7lpAa0-HrJqxhQHaE8?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
     description:
       "I sha dey cut grass",
+    price: 4000,
+    estimatedTime: "4-6 hours",
+    pointsEarned: 80,
   },
 ];
 export default function RequestService() {
@@ -544,7 +559,7 @@ export default function RequestService() {
                                 </svg>
                               ))}
                             <span className="ml-1 text-sm">
-                              {provider.rating} ({provider.reviewCount} reviews)
+                              {provider.rating} ({provider.reviews} reviews)
                             </span>
                           </div>
                           <div className="mt-2 space-y-1">
