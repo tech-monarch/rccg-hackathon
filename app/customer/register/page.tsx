@@ -92,7 +92,7 @@ export default function CustomerRegisterPage() {
       localStorage.setItem("customerLoggedIn", "true");
       localStorage.setItem("currentCustomer", JSON.stringify(userData));
 
-      alert("Registration successful! Welcome to UniHub!");
+      alert("Registration successful! Welcome to Haven!");
       window.location.href = "/customer/dashboard";
     } catch (error) {
       alert("Registration failed. Please try again.");
@@ -111,7 +111,7 @@ export default function CustomerRegisterPage() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">
@@ -130,7 +130,7 @@ export default function CustomerRegisterPage() {
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2">Create Your Account</h1>
             <p className="text-muted-foreground">
-              Join UniHub to find and hire service professionals
+              Join Haven to find and hire service professionals
             </p>
           </div>
 

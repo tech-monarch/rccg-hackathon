@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 
-
 function WhatsAppBotButton({
   variant = "default",
 }: {
@@ -39,10 +38,10 @@ function WhatsAppBotButton({
   const handleClick = () => {
     const phoneNumber = "2349017335663";
     const message =
-      "Hello UniHub Bot, I need help finding a service professional";
+      "Hello Haven Bot, I need help finding a service professional";
     window.open(
       `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
-      "_blank"
+      "_blank",
     );
   };
 
@@ -57,7 +56,7 @@ function WhatsAppBotButton({
       }`}
     >
       <Bot className="w-4 h-4" />
-      UniHub Bot
+      Haven Bot
     </Button>
   );
 }
@@ -154,7 +153,7 @@ export default function CustomerDashboard() {
   // Calculate total points earned
   const totalPoints = serviceHistory.reduce(
     (sum, service) => sum + (service.pointsEarned || 0),
-    0
+    0,
   );
 
   // Check if points are enough for redemption
@@ -167,7 +166,7 @@ export default function CustomerDashboard() {
   const confirmRedemption = () => {
     // In a real app, this would call an API to process the redemption
     alert(
-      "Congratulations! ₦1,000 airtime will be sent to your registered phone number."
+      "Congratulations! ₦1,000 airtime will be sent to your registered phone number.",
     );
     setShowRedeemModal(false);
     // Here we would update the points balance after redemption
@@ -183,7 +182,7 @@ export default function CustomerDashboard() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Button variant="outline" size="sm" onClick={handleLogout}>
@@ -211,11 +210,14 @@ export default function CustomerDashboard() {
               <h1 className="text-3xl font-bold mb-2">
                 Welcome, {userData.fullName}!
               </h1>
-              <p className="text-muted-foreground" style={{marginBottom: "1rem"}}>
+              <p
+                className="text-muted-foreground"
+                style={{ marginBottom: "1rem" }}
+              >
                 Manage your service requests and view your service history
               </p>
-              
-                <WhatsAppBotButton />
+
+              <WhatsAppBotButton />
             </div>
             <Link href="/customer/request-service">
               <Button className="bg-blue-600 hover:bg-blue-700">
@@ -266,7 +268,7 @@ export default function CustomerDashboard() {
                       <p className="text-2xl font-bold">
                         {
                           serviceHistory.filter(
-                            (service) => service.status === "scheduled"
+                            (service) => service.status === "scheduled",
                           ).length
                         }
                       </p>
@@ -286,7 +288,7 @@ export default function CustomerDashboard() {
                       <p className="text-2xl font-bold">
                         {
                           serviceHistory.filter(
-                            (service) => service.status === "completed"
+                            (service) => service.status === "completed",
                           ).length
                         }
                       </p>

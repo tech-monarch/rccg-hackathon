@@ -8,14 +8,14 @@ import {
   ControllerProps,
   FieldPath,
   FieldValues,
-  Formprovider,
+  FormProvider,
   useFormContext,
 } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 
-const Form = Formprovider;
+const Form = FormProvider;
 
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
@@ -35,9 +35,9 @@ const FormField = <
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (
-    <FormFieldContext.provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={{ name: props.name }}>
       <Controller {...props} />
-    </FormFieldContext.provider>
+    </FormFieldContext.Provider>
   );
 };
 
@@ -79,9 +79,9 @@ const FormItem = React.forwardRef<
   const id = React.useId();
 
   return (
-    <FormItemContext.provider value={{ id }}>
+    <FormItemContext.Provider value={{ id }}>
       <div ref={ref} className={cn("space-y-2", className)} {...props} />
-    </FormItemContext.provider>
+    </FormItemContext.Provider>
   );
 });
 FormItem.displayName = "FormItem";

@@ -23,7 +23,7 @@ export function ContactActions({
     const subject = encodeURIComponent(`Inquiry about ${category} services`);
     const body = encodeURIComponent(`Hi ${providerName},
 
-I found your profile on UniHub and I'm interested in your ${category} services.
+I found your profile on Haven and I'm interested in your ${category} services.
 
 Could you please provide more information about:
 - Your availability

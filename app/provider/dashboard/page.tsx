@@ -189,7 +189,7 @@ export default function providerDashboard() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">UH</span>
               </div>
-              <span className="text-xl font-bold text-blue-600">UniHub</span>
+              <span className="text-xl font-bold text-blue-600">Haven</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Link
@@ -545,7 +545,7 @@ export default function providerDashboard() {
                                   className="w-full h-full object-cover"
                                 />
                               </div>
-                            )
+                            ),
                           )}
                         </div>
                       </div>

@@ -6,10 +6,10 @@ import "./globals.css";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 
 export const metadata: Metadata = {
-  title: "UniHub Marketplace",
+  title: "HAVEN",
   description:
-    "Created by UniHub, this marketplace connects you with top service providers in Nigeria for all your home and business needs.",
-  generator: "UniHub Team",
+    "Created by Haven, this marketplace connects you with top service providers in Nigeria for all your home and business needs.",
+  generator: "Haven Team",
 };
 
 export default function RootLayout({
