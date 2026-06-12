@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
+import { paths } from "../utils/paths";
 
 function WhatsAppBotButton({
   variant = "default",
@@ -53,8 +54,8 @@ function WhatsAppBotButton({
       variant={variant === "outline" ? "outline" : "default"}
       className={`gap-2 ${
         variant === "outline"
-          ? "border-green-600 text-green-700 hover:bg-green-50"
-          : "bg-green-600 hover:bg-green-700"
+          ? "border-blue-600 text-blue-700 hover:bg-green-50"
+          : "bg-blue-600 hover:bg-blue-700"
       }`}
     >
       <Bot className="w-4 h-4" />
@@ -274,7 +275,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <WhatsAppBotButton />
-                <Link href="/providers">
+                <Link href={paths.providers}>
                   <Button
                     size="lg"
                     variant="outline"
