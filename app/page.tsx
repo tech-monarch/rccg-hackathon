@@ -4,29 +4,28 @@ import {
   Search,
   Star,
   MapPin,
-  Phone,
-  Mail,
   Clock,
   CheckCircle,
   Shield,
   Bot,
-  Sparkles,
   MessageSquare,
   Zap,
-  Send,
-  Calendar,
   CheckCheck,
   Rocket,
+  Menu,
+  X,
+  Tag,
+  Home,
+  LayoutDashboard,
+  Info,
+  UserPlus,
+  BookOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
   CardFooter,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -158,119 +157,243 @@ const featuredHouses = [
   },
 ];
 
+const sidebarSections = [
+  {
+    label: "Discover",
+    links: [
+      { href: "/providers", label: "Find Providers", icon: Search },
+      { href: "/", label: "Categories", icon: Tag },
+      { href: "/housing", label: "Find Housing", icon: Home },
+    ],
+  },
+  {
+    label: "My Account",
+    links: [
+      { href: "/customer/dashboard", label: "My Dashboard", icon: LayoutDashboard },
+      { href: "#", label: "My Bookings", icon: BookOpen },
+    ],
+  },
+  {
+    label: "Haven",
+    links: [
+      { href: "#", label: "How It Works", icon: Info },
+      { href: "/auth/register?type=provider", label: "Join as Provider", icon: UserPlus },
+    ],
+  },
+];
+
 export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [sidebarOpen]);
+
   return (
     <div className="min-h-screen bg-background">
-      {/* Sticky Header */}
+
+      {/* ── Overlay ── */}
+      <div
+        onClick={() => setSidebarOpen(false)}
+        className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
+          sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      {/* ── Sidebar ── */}
+      <aside
+        className={`fixed top-0 left-0 bottom-0 z-50 w-72 bg-white flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* Sidebar Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b">
+          <Link
+            href={paths.home}
+            className="flex items-center gap-2"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">HA</span>
+            </div>
+            <span className="text-xl font-bold text-blue-600">HAVEN</span>
+          </Link>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="p-1.5 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            aria-label="Close menu"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {/* Sidebar Nav */}
+        <nav className="flex-1 overflow-y-auto py-3">
+          {sidebarSections.map((section) => (
+            <div key={section.label}>
+              <p className="px-5 pt-4 pb-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+                {section.label}
+              </p>
+              {section.links.map(({ href, label, icon: Icon }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={() => setSidebarOpen(false)}
+                  className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 border-l-2 border-transparent hover:border-blue-600 transition-all"
+                >
+                  <Icon size={16} className="flex-shrink-0 text-slate-400" />
+                  {label}
+                </Link>
+              ))}
+            </div>
+          ))}
+
+          {/* WhatsApp Bot in sidebar */}
+          <div className="px-5 pt-6">
+            <button
+              onClick={() => {
+                setSidebarOpen(false);
+                const phoneNumber = "2349017335663";
+                const message = "Hello Haven Bot, I need help finding a service professional";
+                window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+              }}
+              className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+            >
+              <Bot size={16} className="flex-shrink-0" />
+              Chat with Haven Bot
+            </button>
+          </div>
+        </nav>
+
+        {/* Sidebar Footer */}
+        <div className="p-4 border-t flex flex-col gap-2">
+          <Link href={paths.login} onClick={() => setSidebarOpen(false)}>
+            <Button variant="outline" className="w-full">Login</Button>
+          </Link>
+          <Link href={paths.register} onClick={() => setSidebarOpen(false)}>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">Create Account</Button>
+          </Link>
+        </div>
+      </aside>
+
+      {/* ── Sticky Header ── */}
       <header
-        className={`border-b sticky top-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-white/95 py-2 shadow-sm" : "bg-white/90 py-3"
+        className={`border-b sticky top-0 z-30 transition-all duration-300 backdrop-blur-md ${
+          scrolled ? "bg-white/95 py-2 shadow-md" : "bg-white/90 py-3"
         }`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2 group">
+          <div className="flex items-center justify-between gap-3">
+
+            {/* Logo */}
+            <Link
+              href={paths.home}
+              className="flex items-center gap-2 group flex-shrink-0"
+            >
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform">
                 <span className="text-white font-bold text-sm">HA</span>
               </div>
               <span className="text-xl font-bold text-blue-600">HAVEN</span>
             </Link>
 
-            <nav className="hidden md:flex items-center space-x-6">
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-6">
               <Link
-                href="/providers"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                href={paths.providers}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
-                Find providers
+                Find Providers
               </Link>
               <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                href={paths.home}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
                 Categories
               </Link>
-              {/* <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                About
-              </Link> */}
               <Link
-                href="/housing"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                href={paths.housing}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
                 Find Housing
               </Link>
               <Link
-                href="/customer/dashboard"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                href={paths.customerdashboard}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
                 My Dashboard
               </Link>
               <WhatsAppBotButton variant="outline" />
             </nav>
 
-            <div className="flex items-center space-x-2">
-              <div className="hidden sm:flex items-center space-x-2 mr-2">
-                <Link href="/auth/login">
-                  <Button variant="ghost" size="sm">
-                    Login
-                  </Button>
+            {/* Right Actions */}
+            <div className="flex items-center gap-2">
+              {/* Login / Register — hidden on small screens */}
+              <div className="hidden sm:flex items-center gap-1">
+                <Link href={paths.login}>
+                  <Button variant="ghost" size="sm">Login</Button>
                 </Link>
-                <Link href="/auth/register">
-                  <Button variant="ghost" size="sm">
+                <Link href={paths.register}>
+                  <Button variant="ghost" size="sm" className="hidden lg:inline-flex">
                     Create Account
                   </Button>
                 </Link>
               </div>
-              <Link href="/auth/register?type=provider">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+
+              {/* Join as Provider — hidden on very small screens */}
+              <Link href="/auth/register?type=provider" className="hidden sm:block">
+                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
                   Join as provider
                 </Button>
               </Link>
+
+              {/* Hamburger — visible below md */}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="md:hidden p-2 rounded-md hover:bg-slate-100 transition-colors"
+                aria-label="Open menu"
+              >
+                <Menu size={20} className="text-slate-600" />
+              </button>
             </div>
+
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* ── Hero Section ── */}
       <section className="relative py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-            {/* Left Column - Text Content */}
+            {/* Left Column */}
             <div className="lg:w-1/2">
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all border border-blue-200">
-                <div className="flex items-center gap-2">
-                  <Bot className="w-5 h-5 text-blue-600" />
-                  <span className="font-semibold text-blue-600">
-                    Try Haven Bot
-                  </span>
-                  <Rocket className="w-4 h-4 text-red-500 fill-yellow-400" />
-                </div>
+                <Bot className="w-5 h-5 text-blue-600" />
+                <span className="font-semibold text-blue-600">Try Haven Bot</span>
+                <Rocket className="w-4 h-4 text-red-500 fill-yellow-400" />
               </div>
 
               <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                Our Entire <span className="text-blue-600">Campus</span>,<br />
+                Trust is the{" "}
+                <span className="text-blue-600">Infrastructure</span>,
                 <span className="inline-flex items-center">
-                  in One Hub
+                  Haven Builds it.
                   <Zap className="ml-2 w-8 h-8 text-yellow-500 fill-yellow-400" />
                 </span>
               </h1>
 
               <p className="text-lg text-muted-foreground mb-8">
-                Haven brings together everything students need — from finding
-                quick jobs and trusted housing to recovering lost items and
-                staying updated on campus events.
+                Nigeria runs on people who know people. Haven takes the trust
+                already living inside your church, your cooperative, your
+                community — and makes it digital, searchable, and secure.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -288,18 +411,9 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-4">
                 {[
-                  {
-                    icon: <CheckCircle className="w-5 h-5 text-blue-600" />,
-                    text: "Made for Students",
-                  },
-                  {
-                    icon: <Clock className="w-5 h-5 text-blue-600" />,
-                    text: "Real-Time Alerts",
-                  },
-                  {
-                    icon: <Shield className="w-5 h-5 text-blue-600" />,
-                    text: "Safe and Verified",
-                  },
+                  { icon: <CheckCircle className="w-5 h-5 text-blue-600" />, text: "Community Verified" },
+                  { icon: <Clock className="w-5 h-5 text-blue-600" />, text: "Escrow Protected" },
+                  { icon: <Shield className="w-5 h-5 text-blue-600" />, text: "Works on WhatsApp" },
                 ].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     {feature.icon}
@@ -309,7 +423,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column - Image */}
+            {/* Right Column */}
             <div className="lg:w-1/2 relative">
               <div className="relative rounded-2xl overflow-hidden shadow-xl border border-blue-100">
                 <img
@@ -318,15 +432,14 @@ export default function HomePage() {
                   className="w-full h-auto object-cover"
                 />
               </div>
-
-              <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-200 rounded-full opacity-20 -z-10"></div>
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-yellow-200 rounded-full opacity-20 -z-10"></div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue-200 rounded-full opacity-20 -z-10" />
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-yellow-200 rounded-full opacity-20 -z-10" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Wvwerything you need section */}
+      {/* ── Everything You Need Section ── */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -334,8 +447,7 @@ export default function HomePage() {
               Everything You Need
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              One App. Every <span className="text-blue-600">Student</span>{" "}
-              Needs.
+              One App. Every <span className="text-blue-600">Student</span> Needs.
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Haven is a centralized platform where students can access all
@@ -345,57 +457,43 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Quick Jobs */}
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Zap className="w-8 h-8 text-green-600" />
+            {[
+              {
+                icon: <Zap className="w-8 h-8 text-green-600" />,
+                bg: "from-green-100 to-green-200",
+                title: "Quick Jobs",
+                desc: "Find and offer quick jobs for extra income. From tutoring to delivery services.",
+              },
+              {
+                icon: <Search className="w-8 h-8 text-blue-600" />,
+                bg: "from-blue-100 to-blue-200",
+                title: "Lost & Found",
+                desc: "Smart lost & found system to recover your belongings quickly and safely.",
+              },
+              {
+                icon: <MapPin className="w-8 h-8 text-purple-600" />,
+                bg: "from-purple-100 to-purple-200",
+                title: "Verified Housing",
+                desc: "Browse trusted hostels & lodges with verified prices and real locations.",
+              },
+              {
+                icon: <MessageSquare className="w-8 h-8 text-orange-600" />,
+                bg: "from-orange-100 to-orange-200",
+                title: "Campus Alerts",
+                desc: "Get real-time campus alerts for events, lectures, and important announcements.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="text-center group">
+                <div className={`w-16 h-16 bg-gradient-to-br ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-sm">{item.desc}</p>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Quick Jobs</h3>
-              <p className="text-gray-600 text-sm">
-                Find and offer quick jobs for extra income. From tutoring to
-                delivery services.
-              </p>
-            </div>
-
-            {/* Lost & Found */}
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Search className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Lost & Found</h3>
-              <p className="text-gray-600 text-sm">
-                Smart lost & found system to recover your belongings quickly and
-                safely.
-              </p>
-            </div>
-
-            {/* Verified Housing */}
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <MapPin className="w-8 h-8 text-purple-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Verified Housing</h3>
-              <p className="text-gray-600 text-sm">
-                Browse trusted hostels & lodges with verified prices and real
-                locations.
-              </p>
-            </div>
-
-            {/* Campus Alerts */}
-            <div className="text-center group">
-              <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <MessageSquare className="w-8 h-8 text-orange-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Campus Alerts</h3>
-              <p className="text-gray-600 text-sm">
-                Get real-time campus alerts for events, lectures, and important
-                announcements.
-              </p>
-            </div>
+            ))}
           </div>
 
-          {/* Call to Action */}
-          <div className="text-center mt-12" style={{ marginTop: "4rem" }}>
+          <div className="text-center mt-16">
             <div className="inline-flex items-center gap-4 bg-gradient-to-r from-blue-50 to-purple-50 px-8 py-4 rounded-2xl border border-blue-100">
               <Bot className="w-6 h-6 text-blue-600" />
               <span className="text-gray-700 font-medium">
@@ -409,7 +507,7 @@ export default function HomePage() {
 
       <hr className="my-5 border-t border-gray-300" />
 
-      {/* Jobs Section */}
+      {/* ── Providers Section ── */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -439,12 +537,8 @@ export default function HomePage() {
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                       <div className="flex items-center gap-1 text-white">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">
-                          {provider.rating}
-                        </span>
-                        <span className="text-sm text-white/80">
-                          ({provider.reviews} reviews)
-                        </span>
+                        <span className="text-sm font-medium">{provider.rating}</span>
+                        <span className="text-sm text-white/80">({provider.reviews} reviews)</span>
                       </div>
                     </div>
                   </div>
@@ -453,11 +547,7 @@ export default function HomePage() {
                       <h3 className="font-semibold text-lg">{provider.name}</h3>
                       <Badge variant="secondary">{provider.category}</Badge>
                     </div>
-
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {provider.description}
-                    </p>
-
+                    <p className="text-sm text-muted-foreground mb-4">{provider.description}</p>
                     <div className="space-y-3 text-sm mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -475,10 +565,7 @@ export default function HomePage() {
                         onClick={() => {
                           const message = `Hi! I'm interested in your ${provider.category} services. Can you provide more information?`;
                           window.open(
-                            `https://wa.me/${provider.phone.replace(
-                              /[^0-9]/g,
-                              "",
-                            )}?text=${encodeURIComponent(message)}`,
+                            `https://wa.me/${provider.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(message)}`,
                             "_blank",
                           );
                         }}
@@ -487,10 +574,7 @@ export default function HomePage() {
                       >
                         Chat Now
                       </Button>
-                      <Link
-                        href={`/provider/${provider.id}`}
-                        className="flex-1"
-                      >
+                      <Link href={`/provider/${provider.id}`} className="flex-1">
                         <Button variant="outline" size="sm" className="w-full">
                           View Profile
                         </Button>
@@ -504,9 +588,7 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <Link href="/providers">
-              <Button variant="outline" size="lg">
-                Browse All providers
-              </Button>
+              <Button variant="outline" size="lg">Browse All providers</Button>
             </Link>
           </div>
         </div>
@@ -514,19 +596,15 @@ export default function HomePage() {
 
       <hr className="my-5 border-t border-gray-300" />
 
-      {/* Houses Section */}
+      {/* ── Houses Section ── */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4 animate-bounce">
               Top Rated
             </Badge>
-            <h2 className="text-3xl font-bold mb-4">
-              Looking for where to stay?
-            </h2>
-            <p className="text-muted-foreground">
-              providers trusted by thousands of customers
-            </p>
+            <h2 className="text-3xl font-bold mb-4">Looking for where to stay?</h2>
+            <p className="text-muted-foreground">providers trusted by thousands of customers</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -546,12 +624,8 @@ export default function HomePage() {
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                       <div className="flex items-center gap-1 text-white">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">
-                          {house.rating}
-                        </span>
-                        <span className="text-sm text-white/80">
-                          ({house.reviews} reviews)
-                        </span>
+                        <span className="text-sm font-medium">{house.rating}</span>
+                        <span className="text-sm text-white/80">({house.reviews} reviews)</span>
                       </div>
                     </div>
                   </div>
@@ -560,11 +634,7 @@ export default function HomePage() {
                       <h3 className="font-semibold text-lg">{house.name}</h3>
                       <Badge variant="secondary">{house.category}</Badge>
                     </div>
-
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {house.description}
-                    </p>
-
+                    <p className="text-sm text-muted-foreground mb-4">{house.description}</p>
                     <div className="space-y-3 text-sm mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -582,10 +652,7 @@ export default function HomePage() {
                         onClick={() => {
                           const message = `Hi! I'm interested in your ${house.category} services. Can you provide more information?`;
                           window.open(
-                            `https://wa.me/${house.phone.replace(
-                              /[^0-9]/g,
-                              "",
-                            )}?text=${encodeURIComponent(message)}`,
+                            `https://wa.me/${house.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(message)}`,
                             "_blank",
                           );
                         }}
@@ -594,11 +661,6 @@ export default function HomePage() {
                       >
                         Chat Now
                       </Button>
-                      {/* <Link href={`/provider/${provider.id}`} className="flex-1">
-                        <Button variant="outline" size="sm" className="w-full">
-                          View Profile
-                        </Button>
-                      </Link> */}
                     </div>
                   </CardFooter>
                 </Card>
@@ -608,98 +670,13 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <Link href="/housing">
-              <Button variant="outline" size="lg">
-                Browse All Houses
-              </Button>
+              <Button variant="outline" size="lg">Browse All Houses</Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
-      {/*<section className="py-16 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4 animate-bounce">
-              Simple Process
-            </Badge>
-            <h2 className="text-3xl font-bold mb-4">How does Haven Work??</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Get your tasks done in just a few easy steps
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="opacity-0 animate-fade-in">
-              <Card className="h-full border-0 shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
-                    <span className="text-2xl">1</span>
-                  </div>
-                  <CardTitle>Find Your Expert</CardTitle>
-                  <CardDescription>
-                    Browse verified professionals in your area
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <div className="flex flex-col items-center justify-center">
-                      <Search className="w-16 h-16 text-blue-500 mb-2" />
-                      <p className="text-sm text-blue-600 font-medium">Find local experts</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="opacity-0 animate-fade-in" style={{ animationDelay: "100ms" }}>
-              <Card className="h-full border-0 shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
-                    <span className="text-2xl">2</span>
-                  </div>
-                  <CardTitle>Book & Confirm</CardTitle>
-                  <CardDescription>
-                    Schedule an appointment that works for you
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <div className="flex flex-col items-center justify-center">
-                      <Calendar className="w-16 h-16 text-blue-500 mb-2" />
-                      <p className="text-sm text-blue-600 font-medium">Schedule your service</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="opacity-0 animate-fade-in" style={{ animationDelay: "200ms" }}>
-              <Card className="h-full border-0 shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4">
-                    <span className="text-2xl">3</span>
-                  </div>
-                  <CardTitle>Get It Done</CardTitle>
-                  <CardDescription>
-                    Relax while your professional handles the job
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="w-full h-40 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <div className="flex flex-col items-center justify-center">
-                      <CheckCheck className="w-16 h-16 text-blue-500 mb-2" />
-                      <p className="text-sm text-blue-600 font-medium">Enjoy quality service</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>*/}
-
-      {/* Customer Sign Up CTA Section */}
+      {/* ── Customer CTA Section ── */}
       <section className="py-16 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -714,19 +691,12 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="/auth/register">
-                  <Button
-                    size="lg"
-                    className="bg-white text-blue-600 hover:bg-blue-50"
-                  >
+                  <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
                     Create Account
                   </Button>
                 </Link>
                 <Link href="/auth/login">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white-600 hover:bg-white-50"
-                  >
+                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                     Login
                   </Button>
                 </Link>
@@ -735,36 +705,19 @@ export default function HomePage() {
             <div className="md:w-1/2 flex justify-center">
               <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg border border-white/20 max-w-md w-full">
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                      <CheckCheck className="w-5 h-5" />
+                  {[
+                    "Track your service history",
+                    "Save favorite service providers",
+                    "Get personalized recommendations",
+                    "Request services with one click",
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <CheckCheck className="w-5 h-5" />
+                      </div>
+                      <p className="font-medium">{item}</p>
                     </div>
-                    <p className="font-medium">Track your service history</p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                      <CheckCheck className="w-5 h-5" />
-                    </div>
-                    <p className="font-medium">
-                      Save favorite service providers
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                      <CheckCheck className="w-5 h-5" />
-                    </div>
-                    <p className="font-medium">
-                      Get personalized recommendations
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-                      <CheckCheck className="w-5 h-5" />
-                    </div>
-                    <p className="font-medium">
-                      Request services with one click
-                    </p>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -772,96 +725,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      {/* <section className="py-16 bg-gradient-to-br from-blue-50 to-blue-100">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4 animate-bounce">
-              Peace of Mind
-            </Badge>
-            <h2 className="text-3xl font-bold mb-4">Why Choose Haven</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We go the extra mile to ensure you get the best service experience
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="opacity-0 animate-fade-in">
-              <Card className="border-0 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
-                    <Shield className="w-6 h-6" />
-                  </div>
-                  <CardTitle>Verified Professionals</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Every provider on our platform undergoes strict verification and background checks.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="opacity-0 animate-fade-in" style={{ animationDelay: "100ms" }}>
-              <Card className="border-0 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
-                    <CheckCircle className="w-6 h-6" />
-                  </div>
-                  <CardTitle>Quality Guarantee</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    We ensure high-quality work with our satisfaction guarantee policy.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-            
-            <div className="opacity-0 animate-fade-in" style={{ animationDelay: "200ms" }}>
-              <Card className="border-0 bg-white/50 backdrop-blur-sm shadow-sm hover:shadow-md transition-transform hover:-translate-y-2">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4">
-                    <Clock className="w-6 h-6" />
-                  </div>
-                  <CardTitle>On-Time Service</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    Professionals arrive on time or your service is free.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>*/}
-
-      {/* CTA Section */}
-      {/*<section className="py-16 bg-blue-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto opacity-0 animate-fade-in">
-            <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
-            <p className="text-blue-100 mb-8 text-lg">
-              Join thousands of satisfied customers who found the perfect professional for their needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/providers">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 hover:scale-105 transition-transform">
-                  Find a Professional
-                </Button>
-              </Link>
-              <Link href="/auth/register?type=provider">
-                <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10 hover:scale-105 transition-transform">
-                  Become a provider
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>*/}
-
-      {/* Footer */}
+      {/* ── Footer ── */}
       <footer className="bg-muted py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
@@ -880,98 +744,28 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">For Users</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link
-                    href="/providers"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Find providers
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Browse Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/how-it-works"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    How It Works
-                  </Link>
-                </li>
+                <li><Link href="/providers" className="hover:text-foreground transition-colors">Find providers</Link></li>
+                <li><Link href="/" className="hover:text-foreground transition-colors">Browse Categories</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-foreground transition-colors">How It Works</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">For providers</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link
-                    href="/auth/register?type=provider"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Join Haven
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/auth/login?type=provider"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    provider Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/provider-benefits"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Benefits
-                  </Link>
-                </li>
+                <li><Link href="/auth/register?type=provider" className="hover:text-foreground transition-colors">Join Haven</Link></li>
+                <li><Link href="/auth/login?type=provider" className="hover:text-foreground transition-colors">provider Login</Link></li>
+                <li><Link href="/provider-benefits" className="hover:text-foreground transition-colors">Benefits</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <Link
-                    href="/contact"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/help"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Help Center
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/terms"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Terms of Service
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
+                <li><Link href="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
+                <li><Link href="/help" className="hover:text-foreground transition-colors">Help Center</Link></li>
+                <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
+                <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -982,10 +776,6 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* Floating WhatsApp Button */}
-      {/* <div className="fixed bottom-6 right-6 z-50">
-        <WhatsAppBotButton />
-      </div> */}
     </div>
   );
 }
