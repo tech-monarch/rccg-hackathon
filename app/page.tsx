@@ -12,6 +12,9 @@ import {
   Zap,
   CheckCheck,
   Rocket,
+  BadgeCheck,
+  ShieldCheck,
+  MessageCircle,
   Menu,
   X,
   Tag,
@@ -23,11 +26,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 import { paths } from "../utils/paths";
@@ -169,7 +168,11 @@ const sidebarSections = [
   {
     label: "My Account",
     links: [
-      { href: "/customer/dashboard", label: "My Dashboard", icon: LayoutDashboard },
+      {
+        href: "/customer/dashboard",
+        label: "My Dashboard",
+        icon: LayoutDashboard,
+      },
       { href: "#", label: "My Bookings", icon: BookOpen },
     ],
   },
@@ -177,7 +180,11 @@ const sidebarSections = [
     label: "Haven",
     links: [
       { href: "#", label: "How It Works", icon: Info },
-      { href: "/auth/register?type=provider", label: "Join as Provider", icon: UserPlus },
+      {
+        href: "/auth/register?type=provider",
+        label: "Join as Provider",
+        icon: UserPlus,
+      },
     ],
   },
 ];
@@ -195,17 +202,20 @@ export default function HomePage() {
   // Lock body scroll when sidebar is open
   useEffect(() => {
     document.body.style.overflow = sidebarOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [sidebarOpen]);
 
   return (
     <div className="min-h-screen bg-background">
-
       {/* ── Overlay ── */}
       <div
         onClick={() => setSidebarOpen(false)}
         className={`fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${
-          sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          sidebarOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       />
 
@@ -263,8 +273,12 @@ export default function HomePage() {
               onClick={() => {
                 setSidebarOpen(false);
                 const phoneNumber = "2349017335663";
-                const message = "Hello Haven Bot, I need help finding a service professional";
-                window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
+                const message =
+                  "Hello Haven Bot, I need help finding a service professional";
+                window.open(
+                  `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`,
+                  "_blank",
+                );
               }}
               className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
             >
@@ -277,10 +291,14 @@ export default function HomePage() {
         {/* Sidebar Footer */}
         <div className="p-4 border-t flex flex-col gap-2">
           <Link href={paths.login} onClick={() => setSidebarOpen(false)}>
-            <Button variant="outline" className="w-full">Login</Button>
+            <Button variant="outline" className="w-full">
+              Login
+            </Button>
           </Link>
           <Link href={paths.register} onClick={() => setSidebarOpen(false)}>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">Create Account</Button>
+            <Button className="w-full bg-blue-600 hover:bg-blue-700">
+              Create Account
+            </Button>
           </Link>
         </div>
       </aside>
@@ -293,7 +311,6 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between gap-3">
-
             {/* Logo */}
             <Link
               href={paths.home}
@@ -339,17 +356,26 @@ export default function HomePage() {
               {/* Login / Register — hidden on small screens */}
               <div className="hidden sm:flex items-center gap-1">
                 <Link href={paths.login}>
-                  <Button variant="ghost" size="sm">Login</Button>
+                  <Button variant="ghost" size="sm">
+                    Login
+                  </Button>
                 </Link>
                 <Link href={paths.register}>
-                  <Button variant="ghost" size="sm" className="hidden lg:inline-flex">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="hidden lg:inline-flex"
+                  >
                     Create Account
                   </Button>
                 </Link>
               </div>
 
               {/* Join as Provider — hidden on very small screens */}
-              <Link href="/auth/register?type=provider" className="hidden sm:block">
+              <Link
+                href="/auth/register?type=provider"
+                className="hidden sm:block"
+              >
                 <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
                   Join as provider
                 </Button>
@@ -364,7 +390,6 @@ export default function HomePage() {
                 <Menu size={20} className="text-slate-600" />
               </button>
             </div>
-
           </div>
         </div>
       </header>
@@ -377,7 +402,9 @@ export default function HomePage() {
             <div className="lg:w-1/2">
               <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white rounded-full shadow-md hover:shadow-lg transition-all border border-blue-200">
                 <Bot className="w-5 h-5 text-blue-600" />
-                <span className="font-semibold text-blue-600">Try Haven Bot</span>
+                <span className="font-semibold text-blue-600">
+                  Try Haven Bot
+                </span>
                 <Rocket className="w-4 h-4 text-red-500 fill-yellow-400" />
               </div>
 
@@ -411,9 +438,18 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-4">
                 {[
-                  { icon: <CheckCircle className="w-5 h-5 text-blue-600" />, text: "Community Verified" },
-                  { icon: <Clock className="w-5 h-5 text-blue-600" />, text: "Escrow Protected" },
-                  { icon: <Shield className="w-5 h-5 text-blue-600" />, text: "Works on WhatsApp" },
+                  {
+                    icon: <BadgeCheck className="w-5 h-5 text-blue-600" />,
+                    text: "Community Verified",
+                  },
+                  {
+                    icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
+                    text: "Escrow Protected",
+                  },
+                  {
+                    icon: <MessageCircle className="w-5 h-5 text-blue-600" />,
+                    text: "Works on WhatsApp",
+                  },
                 ].map((feature, i) => (
                   <div key={i} className="flex items-center gap-2">
                     {feature.icon}
@@ -444,15 +480,17 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge variant="secondary" className="mb-4 animate-bounce">
-              Everything You Need
+              Why Haven Exists
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              One App. Every <span className="text-blue-600">Student</span> Needs.
+              You Don't Open Google. You Call{" "}
+              <span className="text-blue-600">Someone</span> You Trust.
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Haven is a centralized platform where students can access all
-              essential services in one place. From earning extra income to
-              finding secure housing, we've got you covered.
+              In Nigeria, trust isn't a feature — it's the whole system. Haven
+              digitizes the referral networks already living inside your
+              community, so finding reliable help is as easy as asking someone
+              you know.
             </p>
           </div>
 
@@ -461,30 +499,32 @@ export default function HomePage() {
               {
                 icon: <Zap className="w-8 h-8 text-green-600" />,
                 bg: "from-green-100 to-green-200",
-                title: "Quick Jobs",
-                desc: "Find and offer quick jobs for extra income. From tutoring to delivery services.",
+                title: " Find Verified Artisans",
+                desc: "Vouched for by your community. Not an algorithm.",
               },
               {
                 icon: <Search className="w-8 h-8 text-blue-600" />,
                 bg: "from-blue-100 to-blue-200",
-                title: "Lost & Found",
-                desc: "Smart lost & found system to recover your belongings quickly and safely.",
+                title: "Escrow-Protected Payments",
+                desc:"Your money stays locked until the job is done right.",
               },
               {
                 icon: <MapPin className="w-8 h-8 text-purple-600" />,
                 bg: "from-purple-100 to-purple-200",
                 title: "Verified Housing",
-                desc: "Browse trusted hostels & lodges with verified prices and real locations.",
+                desc: "Real listings. Real location. No agent stress.",
               },
               {
                 icon: <MessageSquare className="w-8 h-8 text-orange-600" />,
                 bg: "from-orange-100 to-orange-200",
-                title: "Campus Alerts",
-                desc: "Get real-time campus alerts for events, lectures, and important announcements.",
+                title: "Community Backed Trust",
+                desc: "Cheat someone here , you lose more than an account.",
               },
             ].map((item, i) => (
               <div key={i} className="text-center group">
-                <div className={`w-16 h-16 bg-gradient-to-br ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                <div
+                  className={`w-16 h-16 bg-gradient-to-br ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}
+                >
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
@@ -537,8 +577,12 @@ export default function HomePage() {
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                       <div className="flex items-center gap-1 text-white">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{provider.rating}</span>
-                        <span className="text-sm text-white/80">({provider.reviews} reviews)</span>
+                        <span className="text-sm font-medium">
+                          {provider.rating}
+                        </span>
+                        <span className="text-sm text-white/80">
+                          ({provider.reviews} reviews)
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -547,7 +591,9 @@ export default function HomePage() {
                       <h3 className="font-semibold text-lg">{provider.name}</h3>
                       <Badge variant="secondary">{provider.category}</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">{provider.description}</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {provider.description}
+                    </p>
                     <div className="space-y-3 text-sm mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -574,7 +620,10 @@ export default function HomePage() {
                       >
                         Chat Now
                       </Button>
-                      <Link href={`/provider/${provider.id}`} className="flex-1">
+                      <Link
+                        href={`/provider/${provider.id}`}
+                        className="flex-1"
+                      >
                         <Button variant="outline" size="sm" className="w-full">
                           View Profile
                         </Button>
@@ -588,7 +637,9 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <Link href="/providers">
-              <Button variant="outline" size="lg">Browse All providers</Button>
+              <Button variant="outline" size="lg">
+                Browse All providers
+              </Button>
             </Link>
           </div>
         </div>
@@ -603,8 +654,12 @@ export default function HomePage() {
             <Badge variant="secondary" className="mb-4 animate-bounce">
               Top Rated
             </Badge>
-            <h2 className="text-3xl font-bold mb-4">Looking for where to stay?</h2>
-            <p className="text-muted-foreground">providers trusted by thousands of customers</p>
+            <h2 className="text-3xl font-bold mb-4">
+              Looking for where to stay?
+            </h2>
+            <p className="text-muted-foreground">
+              providers trusted by thousands of customers
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -624,8 +679,12 @@ export default function HomePage() {
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
                       <div className="flex items-center gap-1 text-white">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">{house.rating}</span>
-                        <span className="text-sm text-white/80">({house.reviews} reviews)</span>
+                        <span className="text-sm font-medium">
+                          {house.rating}
+                        </span>
+                        <span className="text-sm text-white/80">
+                          ({house.reviews} reviews)
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -634,7 +693,9 @@ export default function HomePage() {
                       <h3 className="font-semibold text-lg">{house.name}</h3>
                       <Badge variant="secondary">{house.category}</Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">{house.description}</p>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {house.description}
+                    </p>
                     <div className="space-y-3 text-sm mb-4">
                       <div className="flex items-center gap-2">
                         <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -670,7 +731,9 @@ export default function HomePage() {
 
           <div className="text-center mt-8">
             <Link href="/housing">
-              <Button variant="outline" size="lg">Browse All Houses</Button>
+              <Button variant="outline" size="lg">
+                Browse All Houses
+              </Button>
             </Link>
           </div>
         </div>
@@ -691,12 +754,19 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
                 <Link href="/auth/register">
-                  <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
+                  <Button
+                    size="lg"
+                    className="bg-white text-blue-600 hover:bg-blue-50"
+                  >
                     Create Account
                   </Button>
                 </Link>
                 <Link href="/auth/login">
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white text-white hover:bg-white/10"
+                  >
                     Login
                   </Button>
                 </Link>
@@ -744,28 +814,98 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-4">For Users</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/providers" className="hover:text-foreground transition-colors">Find providers</Link></li>
-                <li><Link href="/" className="hover:text-foreground transition-colors">Browse Categories</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-foreground transition-colors">How It Works</Link></li>
+                <li>
+                  <Link
+                    href="/providers"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Find providers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Browse Categories
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/how-it-works"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    How It Works
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">For providers</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/auth/register?type=provider" className="hover:text-foreground transition-colors">Join Haven</Link></li>
-                <li><Link href="/auth/login?type=provider" className="hover:text-foreground transition-colors">provider Login</Link></li>
-                <li><Link href="/provider-benefits" className="hover:text-foreground transition-colors">Benefits</Link></li>
+                <li>
+                  <Link
+                    href="/auth/register?type=provider"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Join Haven
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/auth/login?type=provider"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    provider Login
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/provider-benefits"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Benefits
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/contact" className="hover:text-foreground transition-colors">Contact Us</Link></li>
-                <li><Link href="/help" className="hover:text-foreground transition-colors">Help Center</Link></li>
-                <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
-                <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/help"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Help Center
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/terms"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
@@ -775,7 +915,6 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
