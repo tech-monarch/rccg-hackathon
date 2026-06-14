@@ -23,6 +23,10 @@ import {
   Info,
   UserPlus,
   BookOpen,
+  UserCheck,
+  Lock,
+  HousePlus,
+  HandHeart,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -497,25 +501,25 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               {
-                icon: <Zap className="w-8 h-8 text-green-600" />,
+                icon: <UserCheck className="w-8 h-8 text-green-600" />,
                 bg: "from-green-100 to-green-200",
                 title: " Find Verified Artisans",
                 desc: "Vouched for by your community. Not an algorithm.",
               },
               {
-                icon: <Search className="w-8 h-8 text-blue-600" />,
+                icon: <Lock className="w-8 h-8 text-blue-600" />,
                 bg: "from-blue-100 to-blue-200",
                 title: "Escrow-Protected Payments",
                 desc:"Your money stays locked until the job is done right.",
               },
               {
-                icon: <MapPin className="w-8 h-8 text-purple-600" />,
+                icon: <HousePlus className="w-8 h-8 text-purple-600" />,
                 bg: "from-purple-100 to-purple-200",
                 title: "Verified Housing",
                 desc: "Real listings. Real location. No agent stress.",
               },
               {
-                icon: <MessageSquare className="w-8 h-8 text-orange-600" />,
+                icon: <HandHeart className="w-8 h-8 text-orange-600" />,
                 bg: "from-orange-100 to-orange-200",
                 title: "Community Backed Trust",
                 desc: "Cheat someone here , you lose more than an account.",
