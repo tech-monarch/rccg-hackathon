@@ -651,7 +651,7 @@ export default function HomePage() {
 
       <hr className="my-5 border-t border-gray-300" />
 
-      {/* ── Houses Section ── */}
+      {/* ── Houses Section ──
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -741,7 +741,7 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ── Customer CTA Section ── */}
       <section className="py-16 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
@@ -757,7 +757,7 @@ export default function HomePage() {
                 and get personalized recommendations.
               </p>
               <div className="flex flex-wrap gap-4 pt-4">
-                <Link href="/auth/register">
+                <Link href={paths.register}>
                   <Button
                     size="lg"
                     className="bg-white text-blue-600 hover:bg-blue-50"
@@ -765,11 +765,11 @@ export default function HomePage() {
                     Create Account
                   </Button>
                 </Link>
-                <Link href="/auth/login">
+                <Link href={paths.login}>
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white text-white hover:bg-white/10"
+                    className="border-white text-white bg-blue-500 hover:bg-white hover:text-blue-500"
                   >
                     Login
                   </Button>
