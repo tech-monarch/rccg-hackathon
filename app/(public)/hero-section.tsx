@@ -30,8 +30,8 @@ export default function HeroSection() {
       <div className="relative z-10 container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-2xl">
           <h1 className="text-4xl md:text-[3.25rem] font-bold text-white mb-6 leading-[1.15]">
-            Find trusted help,{" "}
-            <span className="font-light italic">right on campus</span>
+            Find trusted{" "}
+            <span className="font-light italic">service providers near you</span>
           </h1>
 
           {/* Search bar — Fiverr style */}

@@ -57,7 +57,7 @@ export default function ProvidersSection() {
               Top-rated providers near you
             </h2>
             <p className="text-slate-500 mt-1 text-sm">
-              Trusted by students across campus
+              Trusted by clients in your local area
             </p>
           </div>
           <Link href="/providers" className="hidden md:block">
