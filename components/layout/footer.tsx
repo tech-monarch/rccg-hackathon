@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const footerColumns = [
   {
@@ -30,6 +33,14 @@ const footerColumns = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAuthPage =
+    pathname?.startsWith("/auth") ||
+    pathname?.includes("/login") ||
+    pathname?.includes("/register");
+
+  if (isAuthPage) return null;
+
   return (
     <footer className="bg-slate-900 text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
@@ -42,7 +53,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Connecting students with trusted service providers around them.
+              Connecting you with trusted local service providers around you.
             </p>
           </div>
 
@@ -69,7 +80,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 text-center text-xs text-slate-500">
-          <p>&copy; 2025 Haven. All rights reserved.</p>
+          <p>&copy; 2026 Haven. All rights reserved.</p>
         </div>
       </div>
     </footer>

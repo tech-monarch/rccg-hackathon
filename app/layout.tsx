@@ -4,6 +4,9 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
+import Navbar from "@/components/layout/navbar";
+import { Suspense } from "react";
+import Footer from "@/components/layout/footer";
 
 export const metadata: Metadata = {
   title: "HAVEN",
@@ -29,7 +32,13 @@ html {
         `}</style>
       </head>
       <body>
-        {children}
+        <div className="min-h-screen flex flex-col bg-background">
+          <Suspense fallback={<div className="h-16 bg-white border-b border-slate-200" />}>
+            <Navbar />
+          </Suspense>
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
         <FloatingWhatsApp />
       </body>
     </html>

@@ -11,9 +11,9 @@ import {
   SlidersHorizontal,
 } from "lucide-react";
 import Link from "next/link";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -30,7 +30,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { WhatsAppButton } from "@/components/whatsapp-button";
+import ProviderCard from "@/components/design/provider-card";
 
 const categories = ["Hostel", "Lodge", "Apartment", "Squat"];
 
@@ -91,62 +91,22 @@ const allProviders = [
   },
 ];
 
-export default function ProvidersPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState("rating");
-  const [minRating, setMinRating] = useState(0);
-
-  const filteredProviders = allProviders
-    .filter((provider) => {
-      const matchesSearch =
-        provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        provider.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        provider.description.toLowerCase().includes(searchTerm.toLowerCase());
-
-      const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(provider.category);
-      const matchesLocation =
-        selectedLocations.length === 0 ||
-        selectedLocations.includes(provider.location);
-      const matchesRating = provider.rating >= minRating;
-
-      return (
-        matchesSearch && matchesCategory && matchesLocation && matchesRating
-      );
-    })
-    .sort((a, b) => {
-      switch (sortBy) {
-        case "rating":
-          return b.rating - a.rating;
-        case "reviews":
-          return b.reviews - a.reviews;
-        case "name":
-          return a.name.localeCompare(b.name);
-        default:
-          return 0;
-      }
-    });
-
-  const handleCategoryChange = (category: string, checked: boolean) => {
-    if (checked) {
-      setSelectedCategories([...selectedCategories, category]);
-    } else {
-      setSelectedCategories(selectedCategories.filter((c) => c !== category));
-    }
-  };
-
-  const handleLocationChange = (location: string, checked: boolean) => {
-    if (checked) {
-      setSelectedLocations([...selectedLocations, location]);
-    } else {
-      setSelectedLocations(selectedLocations.filter((l) => l !== location));
-    }
-  };
-
-  const FilterContent = () => (
+function FilterSidebar({
+  selectedCategories,
+  handleCategoryChange,
+  selectedLocations,
+  handleLocationChange,
+  minRating,
+  setMinRating,
+}: {
+  selectedCategories: string[];
+  handleCategoryChange: (category: string, checked: boolean) => void;
+  selectedLocations: string[];
+  handleLocationChange: (location: string, checked: boolean) => void;
+  minRating: number;
+  setMinRating: (rating: number) => void;
+}) {
+  return (
     <div className="space-y-6">
       <div>
         <h3 className="font-semibold mb-3">Categories</h3>
@@ -207,70 +167,93 @@ export default function ProvidersPage() {
       </div>
     </div>
   );
+}
+
+export default function ProvidersPage() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams?.get("search") || "";
+
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState("rating");
+  const [minRating, setMinRating] = useState(0);
+
+  const filteredProviders = allProviders
+    .filter((provider) => {
+      const matchesSearch =
+        provider.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        provider.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        provider.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesCategory =
+        selectedCategories.length === 0 ||
+        selectedCategories.includes(provider.category);
+      const matchesLocation =
+        selectedLocations.length === 0 ||
+        selectedLocations.includes(provider.location);
+      const matchesRating = provider.rating >= minRating;
+
+      return (
+        matchesSearch && matchesCategory && matchesLocation && matchesRating
+      );
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "rating":
+          return b.rating - a.rating;
+        case "reviews":
+          return b.reviews - a.reviews;
+        case "name":
+          return a.name.localeCompare(b.name);
+        default:
+          return 0;
+      }
+    });
+
+  const handleCategoryChange = (category: string, checked: boolean) => {
+    if (checked) {
+      setSelectedCategories([...selectedCategories, category]);
+    } else {
+      setSelectedCategories(selectedCategories.filter((c) => c !== category));
+    }
+  };
+
+  const handleLocationChange = (location: string, checked: boolean) => {
+    if (checked) {
+      setSelectedLocations([...selectedLocations, location]);
+    } else {
+      setSelectedLocations(selectedLocations.filter((l) => l !== location));
+    }
+  };
+
+  const filterProps = {
+    selectedCategories,
+    handleCategoryChange,
+    selectedLocations,
+    handleLocationChange,
+    minRating,
+    setMinRating,
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">UH</span>
-              </div>
-              <span className="text-xl font-bold text-blue-600">Haven</span>
-            </Link>
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link
-                href="/providers"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Find Providers
-              </Link>
-              <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                Categories
-              </Link>
-              <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground"
-              >
-                About
-              </Link>
-              <Link href="/" className="text-foreground font-medium">
-                Find Housing
-              </Link>
-            </nav>
-            <div className="flex items-center space-x-2">
-              <Link href="/provider/login">
-                <Button variant="outline">Provider Login</Button>
-              </Link>
-              <Link href="/provider/register">
-                <Button>Join as Provider</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="bg-background">
 
       <div className="container mx-auto px-4 py-8">
         {/* Search and Sort */}
         <div className="mb-8">
-          <div className="flex flex-col md:flex-row gap-4 mb-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="Search providers, services, or locations..."
-                className="pl-10"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Housing Listings</h1>
+              <p className="text-sm text-slate-500 mt-1">
+                Find available hostel space, lodge, apartment, or squat options
+              </p>
             </div>
-            <div className="flex gap-2">
+            
+            <div className="flex items-center gap-2 self-end md:self-auto">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40">
+                <SelectTrigger className="w-40 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -285,9 +268,10 @@ export default function ProvidersPage() {
                 <SheetTrigger asChild>
                   <Button
                     variant="outline"
-                    className="md:hidden bg-transparent"
+                    className="md:hidden bg-white"
                   >
-                    <SlidersHorizontal className="h-4 w-4" />
+                    <SlidersHorizontal className="h-4 w-4 mr-2" />
+                    Filters
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left">
@@ -295,12 +279,30 @@ export default function ProvidersPage() {
                     <SheetTitle>Filters</SheetTitle>
                   </SheetHeader>
                   <div className="mt-6">
-                    <FilterContent />
+                    <FilterSidebar {...filterProps} />
                   </div>
                 </SheetContent>
               </Sheet>
             </div>
           </div>
+
+          {/* Active Search Term indicator */}
+          {searchTerm && (
+            <div className="flex items-center gap-2 mb-4 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-sm w-fit border border-blue-100">
+              <span>Search results for: <strong>"{searchTerm}"</strong></span>
+              <button 
+                onClick={() => {
+                  const params = new URLSearchParams(window.location.search);
+                  params.delete("search");
+                  router.push(`${pathname}?${params.toString()}`);
+                }} 
+                className="hover:text-blue-900 transition-colors font-bold ml-1 text-lg leading-none"
+                title="Clear search"
+              >
+                &times;
+              </button>
+            </div>
+          )}
 
           <div className="text-sm text-muted-foreground">
             Showing {filteredProviders.length} housings
@@ -309,87 +311,21 @@ export default function ProvidersPage() {
 
         <div className="flex gap-8">
           {/* Desktop Filters */}
-          <div className="hidden md:block w-64 shrink-0">
-            <Card className="p-6 sticky top-4">
+          <div className="hidden md:block w-64 shrink-0 sticky top-28 self-start">
+            <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-[0_2px_8px_rgba(15,23,42,0.01)]">
               <h2 className="font-semibold mb-4 flex items-center gap-2">
                 <Filter className="h-4 w-4 text-blue-600" />
                 Filters
               </h2>
-              <FilterContent />
-            </Card>
+              <FilterSidebar {...filterProps} />
+            </div>
           </div>
 
           {/* Providers Grid */}
           <div className="flex-1">
             <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {filteredProviders.map((provider) => (
-                <Card
-                  key={provider.id}
-                  className="overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="aspect-video relative overflow-hidden">
-                    <img
-                      src={provider.image || "/placeholder.svg"}
-                      alt={provider.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-lg">{provider.name}</h3>
-                      <div className="flex items-center gap-1">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">
-                          {provider.rating}
-                        </span>
-                        <span className="text-sm text-muted-foreground">
-                          ({provider.reviews})
-                        </span>
-                      </div>
-                    </div>
-
-                    <Badge variant="secondary" className="mb-3">
-                      {provider.category}
-                    </Badge>
-
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {provider.description}
-                    </p>
-
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground" />
-                        <span>{provider.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-muted-foreground" />
-                        <WhatsAppButton
-                          phoneNumber={provider.phone}
-                          message={`Hi! I'm interested in your ${provider.category} services. Can you provide more information?`}
-                          variant="ghost"
-                          size="sm"
-                          className="p-0 h-auto font-normal text-sm hover:text-blue-600"
-                          showIcon={false}
-                        >
-                          {provider.phone}
-                        </WhatsAppButton>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Mail className="h-4 w-4 text-muted-foreground" />
-                        <span className="truncate">{provider.email}</span>
-                      </div>
-                    </div>
-
-                    <Link
-                      href={`/provider/${provider.id}`}
-                      className="block mt-4"
-                    >
-                      <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                        Message
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                <ProviderCard key={provider.id} provider={provider as any} />
               ))}
             </div>
 
@@ -401,7 +337,7 @@ export default function ProvidersPage() {
                 <Button
                   variant="outline"
                   onClick={() => {
-                    setSearchTerm("");
+                    router.push(pathname);
                     setSelectedCategories([]);
                     setSelectedLocations([]);
                     setMinRating(0);

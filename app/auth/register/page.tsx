@@ -1,152 +1,125 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, EyeOff, User, Briefcase } from "lucide-react";
+import { User, Briefcase, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import AuthLayout from "@/components/layout/auth-layout";
 
 export default function RegisterPage() {
   const searchParams = useSearchParams();
   const [userType, setUserType] = useState<"customer" | "provider">(
-    searchParams.get("type") === "provider" ? "provider" : "customer",
+    searchParams?.get("type") === "provider" ? "provider" : "customer",
   );
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">UH</span>
+    <AuthLayout 
+      title="Create Your Account" 
+      subtitle="Join Haven and get started today."
+    >
+      <div className="space-y-8">
+        <RadioGroup
+          value={userType}
+          onValueChange={(value) =>
+            setUserType(value as "customer" | "provider")
+          }
+          className="grid gap-4"
+        >
+          <label
+            htmlFor="customer"
+            className={`relative flex cursor-pointer rounded-2xl border-2 p-5 shadow-sm transition-all hover:shadow-md ${
+              userType === "customer" 
+                ? "border-blue-600 bg-blue-50/50" 
+                : "border-slate-200 bg-white hover:border-blue-200"
+            }`}
+          >
+            <RadioGroupItem value="customer" id="customer" className="sr-only" />
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-full transition-colors ${
+                  userType === "customer" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"
+                }`}>
+                  <User className="h-6 w-6" />
+                </div>
+                <div className="grid gap-1">
+                  <p className={`font-bold text-lg leading-none ${userType === "customer" ? "text-blue-900" : "text-slate-900"}`}>
+                    Customer
+                  </p>
+                  <p className="text-sm text-slate-500">
+                    Find and hire trusted service professionals
+                  </p>
+                </div>
               </div>
-              <span className="text-xl font-bold text-blue-600">Haven</span>
-            </Link>
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">
-                Already have an account?
-              </span>
-              <Link href="/auth/login">
-                <Button variant="outline">Sign In</Button>
-              </Link>
+              <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                userType === "customer" ? "border-blue-600" : "border-slate-300"
+              }`}>
+                {userType === "customer" && <div className="h-2.5 w-2.5 rounded-full bg-blue-600" />}
+              </div>
             </div>
-          </div>
-        </div>
-      </header>
+          </label>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold mb-2">Create Your Account</h1>
-            <p className="text-muted-foreground">Join Haven and get started</p>
-          </div>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Choose Account Type</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                <div className="space-y-3">
-                  <Label>I want to register as a:</Label>
-                  <RadioGroup
-                    value={userType}
-                    onValueChange={(value) =>
-                      setUserType(value as "customer" | "provider")
-                    }
-                    className="flex flex-col space-y-4"
-                  >
-                    <div className="flex items-start space-x-3">
-                      <RadioGroupItem
-                        value="customer"
-                        id="customer"
-                        className="mt-1"
-                      />
-                      <div>
-                        <Label
-                          htmlFor="customer"
-                          className="flex items-center space-x-2 cursor-pointer"
-                        >
-                          <User className="h-5 w-5 text-blue-600" />
-                          <span className="font-medium">Customer</span>
-                        </Label>
-                        <p className="text-sm text-muted-foreground ml-7 mt-1">
-                          Find and hire service professionals for your needs
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <RadioGroupItem
-                        value="provider"
-                        id="provider"
-                        className="mt-1"
-                      />
-                      <div>
-                        <Label
-                          htmlFor="provider"
-                          className="flex items-center space-x-2 cursor-pointer"
-                        >
-                          <Briefcase className="h-5 w-5 text-blue-600" />
-                          <span className="font-medium">Service provider</span>
-                        </Label>
-                        <p className="text-sm text-muted-foreground ml-7 mt-1">
-                          Offer your services and connect with customers
-                        </p>
-                      </div>
-                    </div>
-                  </RadioGroup>
+          <label
+            htmlFor="provider"
+            className={`relative flex cursor-pointer rounded-2xl border-2 p-5 shadow-sm transition-all hover:shadow-md ${
+              userType === "provider" 
+                ? "border-blue-600 bg-blue-50/50" 
+                : "border-slate-200 bg-white hover:border-blue-200"
+            }`}
+          >
+            <RadioGroupItem value="provider" id="provider" className="sr-only" />
+            <div className="flex w-full items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-full transition-colors ${
+                  userType === "provider" ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"
+                }`}>
+                  <Briefcase className="h-6 w-6" />
                 </div>
-
-                <div className="pt-4">
-                  <Link
-                    href={
-                      userType === "customer"
-                        ? "/customer/register"
-                        : "/provider/register"
-                    }
-                  >
-                    <Button
-                      className="w-full bg-blue-600 hover:bg-blue-700"
-                      size="lg"
-                    >
-                      Continue
-                    </Button>
-                  </Link>
-                </div>
-
-                <div className="text-center text-sm text-muted-foreground">
-                  Already have an account?{" "}
-                  <Link
-                    href="/auth/login"
-                    className="text-blue-600 hover:underline"
-                  >
-                    Sign in here
-                  </Link>
+                <div className="grid gap-1">
+                  <p className={`font-bold text-lg leading-none ${userType === "provider" ? "text-blue-900" : "text-slate-900"}`}>
+                    Service Provider
+                  </p>
+                  <p className="text-sm text-slate-500">
+                    Offer your services and grow your business
+                  </p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+              <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center ${
+                userType === "provider" ? "border-blue-600" : "border-slate-300"
+              }`}>
+                {userType === "provider" && <div className="h-2.5 w-2.5 rounded-full bg-blue-600" />}
+              </div>
+            </div>
+          </label>
+        </RadioGroup>
 
-          <div className="mt-8 text-center">
-            <p className="text-sm text-muted-foreground">
-              By creating an account, you agree to our{" "}
-              <Link href="/terms" className="text-blue-600 hover:underline">
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="text-blue-600 hover:underline">
-                Privacy Policy
-              </Link>
-            </p>
-          </div>
-        </div>
+        <Link
+          href={
+            userType === "customer"
+              ? "/customer/register"
+              : "/provider/register"
+          }
+          className="block w-full"
+        >
+          <Button
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white h-14 rounded-xl text-lg font-semibold shadow-lg shadow-blue-200 transition-all group"
+          >
+            Continue
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </Link>
+
+        <p className="text-center text-slate-600 font-medium">
+          Already have an account?{" "}
+          <Link
+            href="/auth/login"
+            className="text-blue-600 hover:text-blue-700 hover:underline font-bold transition-colors"
+          >
+            Sign in here
+          </Link>
+        </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
