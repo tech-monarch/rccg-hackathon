@@ -282,7 +282,7 @@ export default function Navbar() {
             <button
               onClick={() => {
                 setSidebarOpen(false);
-                const phoneNumber = "2349017335663";
+                const phoneNumber = "23467296455";
                 const message =
                   "Hello Haven Bot, I need help finding a service professional";
                 window.open(

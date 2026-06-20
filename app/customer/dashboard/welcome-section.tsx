@@ -11,7 +11,7 @@ function WhatsAppBotButton({
   variant?: "default" | "outline";
 }) {
   const handleClick = () => {
-    const phoneNumber = "2349017335663";
+    const phoneNumber = "2349067296455";
     const message =
       "Hello Haven Bot, I need help finding a service professional";
     window.open(
