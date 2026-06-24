@@ -1,3 +1,12 @@
+BACKEND GITHUB REPO:
+
+https://github.com/tech-monarch/rccg-hackathon-be.git
+
+
+BOT GITHUB REPO:
+
+https://github.com/tech-monarch/haven-whatsapp-bot.git
+
 
 # Haven
 
