@@ -30,6 +30,22 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setIsSubmitting(true);
+
+    // Mock Admin Bypass
+    if (formData.email.trim().toLowerCase() === "admin@haven.com") {
+      saveSession({
+        accessToken: "mock-admin-access-token",
+        refreshToken: "mock-admin-refresh-token",
+        role: "ADMIN",
+        profileId: "admin-profile-id",
+        userId: "admin-user-id",
+      });
+      localStorage.setItem("haven_admin_profile", JSON.stringify({ fullName: "System Admin", email: "admin@haven.com" }));
+      window.location.href = "/admin/dashboard";
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const res = await authApi.login(formData.email, formData.password);
       if (!res.success) { setError(res.message || "Invalid email or password"); return; }

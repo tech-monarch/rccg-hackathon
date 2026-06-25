@@ -17,14 +17,18 @@ export default function ProvidersSection() {
 
   const mapped = providers.map((p: any) => ({
     id: p.id,
-    name: p.businessName,
-    category: p.category,
-    rating: parseFloat(p.avgRating) || 0,
-    reviews: p.totalReviews || 0,
-    location: p.location,
+    businessName: p.businessName,
+    ownerName: p.ownerName || "",
     phone: p.phone,
-    image: p.portfolioImages?.[0]?.imageUrl || "/placeholder.jpg",
+    category: p.category,
+    location: p.location,
     description: p.description,
+    isVerified: p.isVerified ?? false,
+    isPublished: p.isPublished ?? true,
+    avgRating: p.avgRating || 0,
+    totalReviews: p.totalReviews || 0,
+    profileViews: p.profileViews || 0,
+    portfolioImages: p.portfolioImages || (p.image ? [{ imageUrl: p.image }] : []),
   }));
 
   return (
