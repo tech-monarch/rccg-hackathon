@@ -125,7 +125,7 @@ export default function Navbar() {
     ),
   ];
 
-  const isAuthPage = pathname?.startsWith("/auth") || pathname?.includes("/login") || pathname?.includes("/register");
+  const isAuthPage = pathname?.startsWith("/auth") || pathname?.includes("/login") || pathname?.includes("/register") || pathname?.startsWith("/admin");
   if (isAuthPage) return null;
 
   return (

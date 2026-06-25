@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CustomerAuthGuard } from "@/components/customer-auth-guard";
-import DashboardHeader from "./dashboard-header";
 import WelcomeSection from "./welcome-section";
 import OverviewTab from "./overview-tab";
 import ServiceHistoryTab from "./service-history-tab";
@@ -50,7 +49,6 @@ export default function CustomerDashboardPage() {
   return (
     <CustomerAuthGuard>
       <div className="min-h-screen bg-slate-50">
-        <DashboardHeader customerData={customerData} />
         <div className="container mx-auto px-4 py-6 max-w-5xl">
           <WelcomeSection customerData={customerData} points={points} />
           <Tabs defaultValue="overview" className="mt-6">
